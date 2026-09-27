@@ -39,7 +39,8 @@ echo "debian:debian123123" | chpasswd
 DEBIAN_FRONTEND=noninteractive apt install -y \
     linux-image-amd64 firmware-linux grub-pc \
     xfce4 xfce4-goodies lightdm network-manager \
-    htop vim ssh git wget curl build-essential python3-venv sysstat timeshift qemu-guest-agent
+    htop vim ssh git wget curl build-essential python3-venv \
+    sysstat timeshift qemu-guest-agent firefox
 
 # enable services
 systemctl enable NetworkManager
@@ -56,6 +57,8 @@ chown -R debian:debian /home/debian
 # Install GRUB to sda
 grub-install /dev/sda
 update-grub
+
+sync
 
 # output telling the user to type exit to return to stage1.sh
 # and exit the chroot env.
