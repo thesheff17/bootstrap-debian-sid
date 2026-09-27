@@ -37,29 +37,6 @@ chmod +x ./stage1.sh
 ./stage1.sh
 ```
 
-run stage2.sh when it comes up:
-```bash
-./stage2.sh
-```
-
-exit stage2.sh when it tells you to
-```bash
-exit
-```
-
-final output I get when testing:
-```text
-exit
-stage1.sh running again...
-sleeping 3 seconds then unmounting the file system.
-debian sid install completed.
-you should remove the live cd after rebooting.
-if the live cd boots again your boot order is set to the live cd first.
-please fix and reboot again.
-duration: - 2 minutes and 32 seconds elapsed.
-Press [ENTER] to reboot, or Ctrl+C to cancel...
-```
-
 ### Where am I testing this?
 
 I am testing this inside a proxmox 9.2.20 env.
@@ -74,4 +51,4 @@ INLAND 4TB Gaming NVMe SSD
 ```
 
 during testing:
-`duration: - 2 minutes and 32 seconds elapsed.`
+`duration: - 2 minutes and 26 seconds elapsed.`
