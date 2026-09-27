@@ -34,15 +34,12 @@ useradd -m -G sudo -s /bin/bash debian
 echo "root:debian123123" | chpasswd
 echo "debian:debian123123" | chpasswd
 
-# Install Linux kernel and GRUB bootloader
-# apt install -y linux-image-amd64 grub-efi-amd64 firmware-linux
-DEBIAN_FRONTEND=noninteractive apt install -y linux-image-amd64 firmware-linux grub-pc
-
-# Install Xfce desktop, display manager, and NetworkManager
-apt install -y xfce4 xfce4-goodies lightdm network-manager
-
-# install some other base packages
-apt install -y tmux htop vim ssh git wget curl build-essential python3-venv sysstat timeshift qemu-guest-agent
+# Install Linux kernel, boot loader, xfce, and custom tools
+# combining these all into a single command
+DEBIAN_FRONTEND=noninteractive apt install -y \
+    linux-image-amd64 firmware-linux grub-pc \
+    xfce4 xfce4-goodies lightdm network-manager \
+    htop vim ssh git wget curl build-essential python3-venv sysstat timeshift qemu-guest-agent
 
 # enable services
 systemctl enable NetworkManager
