@@ -19,28 +19,27 @@ apt update
 echo "debian-sid" > /etc/hostname
 sed -i 's/127\.0\.0\.1[[:space:]]\+localhost$/127.0.0.1   localhost debian-sid/' /etc/hosts
 
+# conslidate all apt commands
+# Install Linux kernel, boot loader, xfce, and custom tools
+DEBIAN_FRONTEND=noninteractive apt install -y \
+    sudo locales \
+    linux-image-amd64 firmware-linux grub-pc \
+    xfce4 xfce4-goodies lightdm network-manager \
+    htop vim ssh git wget curl build-essential python3-venv \
+    sysstat timeshift qemu-guest-agent firefox
+
 # Configure Timezone and Locales
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
-apt install -y locales
 sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
 echo 'LANG=en_US.UTF-8' > /etc/default/locale
 locale-gen
 
 # Create user and install sudo
-apt install -y sudo
 useradd -m -G sudo -s /bin/bash debian
 
 # set default passwords
 echo "root:debian123123" | chpasswd
 echo "debian:debian123123" | chpasswd
-
-# Install Linux kernel, boot loader, xfce, and custom tools
-# combining these all into a single command
-DEBIAN_FRONTEND=noninteractive apt install -y \
-    linux-image-amd64 firmware-linux grub-pc \
-    xfce4 xfce4-goodies lightdm network-manager \
-    htop vim ssh git wget curl build-essential python3-venv \
-    sysstat timeshift qemu-guest-agent firefox
 
 # enable services
 systemctl enable NetworkManager
