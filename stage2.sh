@@ -49,11 +49,12 @@ systemctl enable NetworkManager
 systemctl enable lightdm
 systemctl enable ssh
 
-# prep my bash banner script
-mkdir ~/git/
-mkdir ~/.virtualenvs
-cd ~/git/
+# prep my bash banner script 
+mkdir /home/debian/git/
+mkdir /home/debian/.virtualenvs
+cd /home/debian/git/
 git clone https://github.com/thesheff17/bash_banner.git
+chown -R debian:debian /home/debian
 
 # Install GRUB to sda
 grub-install /dev/sda
