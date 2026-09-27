@@ -34,7 +34,7 @@ I'm still testing but so far seems very fast.
 
 ### Run the script after you have ssh setup
 ```
-wget
+wget https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/stage1.sh
 chmod +x ./stage1.sh
 ./stage1.sh
 ```

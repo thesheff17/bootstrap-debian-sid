@@ -54,9 +54,11 @@ genfstab -U /mnt >> /mnt/etc/fstab
 for dir in /dev /dev/pts /proc /sys /run; do mount --bind $dir /mnt$dir; done
 
 # wget stage2.sh script
-exit 0
+wget -P /mnt/etc/root/stage2.sh https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/stage2.sh
+chmod +x /mnt/etc/root/stage2.sh
 
-# Enter chroot environment
+echo "The next command is entering the chroot env." 
+echo "You have to run cd /root/ ./stage2.sh once the prompt shows up."
 chroot /mnt /bin/bash
 
 # the next command to run is usually exiting chroot from stage2.sh...
