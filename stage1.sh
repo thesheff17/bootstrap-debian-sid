@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+# clear
+clear
+
+echo "=================================================="
+echo "                   WARNING                        "
+echo "=================================================="
+echo "This script is EXTREMELY DESTRUCTIVE."
+echo "Executing this will format your hard drive and"
+echo "permanently erase ALL data."
+echo "You have been warned."
+echo "=================================================="
+echo
+
+# Prompt the user for confirmation
+read -rp "Type 'YES' (all uppercase) to proceed with formatting: " USER_INPUT
+
+# Check if the user entered exactly 'YES'
+if [ "$USER_INPUT" != "YES" ]; then
+    echo "Aborting operation. No changes were made."
+    exit 1
+fi
+
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root."
+  exit 1
+fi
+
+# start the wall clock timer
+SECONDS=0
+
+# base packages
+# this also assumes you already ran apt-get because of ssh
+# if you haven't ran it in a while you should
+apt - -y install dosfstools parted debootstrap arch-install-scripts vim wget
+
+# hard drive partitioning
+parted -s /dev/sda mklabel gpt
+parted -s /dev/sda mkpart primary 1MiB 2MiB
+parted -s /dev/sda set 1 bios_grub on
+parted -s /dev/sda mkpart primary linux-swap 2MiB 1538MiB
+parted -s /dev/sda mkpart primary ext4 1538MiB 100%
+mkswap /dev/sda2
+swapon /dev/sda2
+mkfs.ext4 /dev/sda3
+
+mount /dev/sda3 /mnt
+
+debootstrap --arch=amd64 sid /mnt http://192.168.1.194:3142/deb.debian.org/debian/
+
+genfstab -U /mnt >> /mnt/etc/fstab
+
+for dir in /dev /dev/pts /proc /sys /run; do mount --bind $dir /mnt$dir; done
+
+# wget stage2.sh script
+exit 0
+
+# Enter chroot environment
+chroot /mnt /bin/bash
+
+# the next command to run is usually exiting chroot from stage2.sh...
+# we sleep a little bit before umount
+sleep 5
+
+# Unmount all mounted filesystems cleanly
+umount -R /mnt
+
+echo "debian sid install completed."
+echo "you should remove the live cd after rebooting."
+echo "if the live cd boots again your boot order is set to the live cd first."
+echo "please fix and reboot again."
+
+# elapsed time
+duration=$SECONDS
+elapsed_seconds=$((end_time - start_time))
+echo "duration: - $((duration / 60)) minutes and $((duration % 60)) seconds elapsed."
+
+read -r -p "Press [ENTER] to reboot, or Ctrl+C to cancel..."
+sudo reboot
