@@ -32,8 +32,16 @@ I am testing this inside a proxmox 9.2.20 env.
 
 I'm still testing but so far seems very fast.
 
-### Run the script after you have ssh setup
+### comands to run after live cd boots
+```bash
+sudo passwd user
+sudo apt install -y ssh
+sudo systemctl start ssh
+ip addr show # get ip address
 ```
+
+### Run the script after you have ssh into the instance
+```bash
 wget https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/stage1.sh
 chmod +x ./stage1.sh
 ./stage1.sh
