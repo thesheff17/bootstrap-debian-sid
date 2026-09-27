@@ -62,5 +62,4 @@ update-grub
 # output telling the user to type exit to return to stage1.sh
 # and exit the chroot env.
 echo "stage2.sh completed."
-echo "type exit to return to stage1.sh."
-echo "this will exist the chroot env."
+echo "Type exit to return to stage1.sh."
