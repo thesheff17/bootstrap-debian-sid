@@ -66,7 +66,7 @@ I am testing this inside a proxmox 9.2.20 env.
 
 ### How fast is the install?
 
-I'm consistently getting sub 3 min on on a proxmox vm with these specs:
+I'm consistently getting sub 3 min on a proxmox vm with these specs:
 ```text
 4 core CPU
 4 GB of RAM

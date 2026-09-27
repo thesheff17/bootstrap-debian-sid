@@ -59,11 +59,8 @@ chmod +x /mnt/stage2.sh
 
 echo "The next command is entering the chroot env." 
 echo "You can run ./stage2.sh to continue..."
-chroot /mnt /bin/bash
+chroot /mnt /bin/bash /stage2.sh
 
-# the next command to run is usually exiting chroot from stage2.sh...
-# we sleep a little bit before umount
-echo "stage1.sh running again..."
 echo "sleeping 3 seconds then unmounting the file system."
 sleep 3
 
