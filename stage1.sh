@@ -63,9 +63,12 @@ chroot /mnt /bin/bash
 
 # the next command to run is usually exiting chroot from stage2.sh...
 # we sleep a little bit before umount
+echo "stage1.sh running again..."
+echo "sleeping 5 seconds then unmounting the file system."
 sleep 5
 
 # Unmount all mounted filesystems cleanly
+cd /
 umount -R /mnt
 
 echo "debian sid install completed."
