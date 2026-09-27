@@ -59,6 +59,8 @@ git clone https://github.com/thesheff17/bash_banner.git
 grub-install /dev/sda
 update-grub
 
-# small output telling the user we are exiting the chroot env
-echo "stage2.sh completed.  exiting chroot env..."
-exit 0
+# output telling the user to type exit to return to stage1.sh
+# and exit the chroot env.
+echo "stage2.sh completed."
+echo "type exit to return to stage1.sh."
+echo "this will exist the chroot env."
