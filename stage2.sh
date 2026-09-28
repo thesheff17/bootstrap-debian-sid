@@ -26,7 +26,7 @@ DEBIAN_FRONTEND=noninteractive apt install -y \
     linux-image-amd64 firmware-linux grub-pc \
     xfce4 xfce4-goodies lightdm network-manager \
     htop vim ssh git wget curl build-essential python3-venv \
-    sysstat timeshift qemu-guest-agent firefox
+    sysstat timeshift qemu-guest-agent firefox tmux
 
 # Configure Timezone and Locales
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
