@@ -56,3 +56,53 @@ INLAND 4TB Gaming NVMe SSD
 
 during testing:
 `duration: - 2 minutes and 26 seconds elapsed.`
+
+### make a custom ISO with a `run.sh` bash script
+
+install tools
+```bash
+apt update
+apt install xorriso squashfs-tools
+```
+
+extract the ISO
+```bash
+mkdir -p ~/iso_unpack ~/squashfs_root
+xorriso -osirrox on -indev debian-live-13.7.0-amd64-standard.iso -extract / ~/iso_unpack
+unsquashfs -d ~/squashfs_root ~/iso_unpack/live/filesystem.squashfs
+```
+
+add your custom bash script:
+```bash
+cd ~/squashfs_root/usr/local/bin/
+wget http://xxx.xx.xx.xx/run.sh
+chmod +x ./run.sh
+```
+
+repack
+```bash
+rm ~/iso_unpack/live/filesystem.squashfs
+mksquashfs ~/squashfs_root ~/iso_unpack/live/filesystem.squashfs -comp xz
+```
+
+generate new ISO:
+```bash
+xorriso -indev debian-live-13.7.0-amd64-standard.iso \
+        -outdev debian-live-custom.iso \
+        -blank as_needed \
+        -boot_image any replay \
+        -map ~/iso_unpack / \
+        -commit
+```
+
+This is what my `run.sh` looks like this:
+```bash
+#!/bin/bash
+
+sudo passwd user
+sudo apt install -y ssh
+sudo systemctl start ssh
+wget https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/stage1.sh
+chmod +x stage1.sh
+ip addr show | grep 192
+```
