@@ -11,6 +11,10 @@ Feel free to use but use at your own RISK!  These scripts format hard drives.  Y
 
 As I look at it I want the most minimal linux distro package install with a basic GUI.  I picked [xfce](https://www.xfce.org/) env since it is usually pretty lightweight.  Installation times for me are also extremely fast with even the most basic hardware.  See below for apt-cache-ng info.
 
+### Download live standard ISO
+I use [debian-live-13.7.0-amd64-standard.iso](https://cdimage.debian.org/debian-cd/13.7.0-live/amd64/iso-hybrid/) and the hash can be find [here](https://cdimage.debian.org/debian-cd/13.7.0-live/amd64/iso-hybrid/SHA256SUMS).
+
+
 ### apt-cache-ng
 
 I prep 1 virtual machine as my apt proxy using [apt-cache-ng](https://www.unix-ag.uni-kl.de/~bloch/acng/).
