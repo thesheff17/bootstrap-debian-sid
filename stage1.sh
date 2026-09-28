@@ -30,9 +30,6 @@ fi
 # start the wall clock timer
 SECONDS=0
 
-# base packages
-# this also assumes you already ran apt-get because of ssh
-# if you haven't ran it in a while you should
 apt - -y install dosfstools parted debootstrap arch-install-scripts vim wget
 
 # hard drive partitioning
@@ -57,8 +54,7 @@ for dir in /dev /dev/pts /proc /sys /run; do mount --bind $dir /mnt$dir; done
 wget -P /mnt/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/stage2.sh
 chmod +x /mnt/stage2.sh
 
-echo "The next command is entering the chroot env." 
-echo "You can run ./stage2.sh to continue..."
+# calling into the chroot env and running stage2.sh
 chroot /mnt /bin/bash /stage2.sh
 
 echo "sleeping 3 seconds then unmounting the file system."
