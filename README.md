@@ -57,6 +57,10 @@ INLAND 4TB Gaming NVMe SSD
 during testing:
 `duration: - 2 minutes and 26 seconds elapsed.`
 
+For even faster testing I change a proxmox disk cache setting to: `Write Back (Unsafe)` during setup.  This can reduce the time another 45 seconds or so with this setting.  Use at your own risk though it is Unsafe for a reason.  You can read more about them [here](https://forum.proxmox.com/threads/disk-cache-wiki-documentation.125775/).
+
+`duration: - 1 minutes and 40 seconds elapsed.`
+
 ### make a custom ISO with a `run.sh` bash script
 
 install tools
