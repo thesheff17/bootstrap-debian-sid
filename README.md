@@ -9,7 +9,7 @@ Feel free to use but use at your own RISK!  These scripts format hard drives.  Y
 
 ### Why make this?
 
-As I look at it I want the most minimal linux distro package install with a basic GUI.  You can pick either the gnome or the xfce desktop env.  Installation times for me are also extremely fast with even the most basic hardware.  See below for apt-cache-ng info.
+As I look at it I want the most minimal linux distro package install with a basic GUI.  You can pick either the xfce, gnome, or none for the desktop env.  Right now it defaults to xfce.  Installation times for me are also extremely fast with even the most basic hardware.  See below for apt-cache-ng info.
 
 ### Download live standard ISO
 I use [debian-live-13.7.0-amd64-standard.iso](https://cdimage.debian.org/debian-cd/13.7.0-live/amd64/iso-hybrid/) and the hash can be find [here](https://cdimage.debian.org/debian-cd/13.7.0-live/amd64/iso-hybrid/SHA256SUMS).
@@ -41,27 +41,12 @@ chmod +x ./stage1.sh
 ./stage1.sh
 ```
 
-### Where am I testing this?
-
-I am testing this inside a proxmox 9.2.20 env.
-
-### How fast is the install?
-
-I'm consistently getting sub 3 min on a proxmox vm with these specs:
-```text
-4 core CPU
-4 GB of RAM
-INLAND 4TB Gaming NVMe SSD
-```
-
-during testing:
-`duration: - 2 minutes and 26 seconds elapsed.`
+### Faster testing (Unsafe)
 
 For even faster testing I change a proxmox disk cache setting to: `Write Back (Unsafe)` during setup.  This can reduce the time another 45 seconds or so with this setting.  Use at your own risk though it is Unsafe for a reason.  You can read more about them [here](https://forum.proxmox.com/threads/disk-cache-wiki-documentation.125775/).
 
-`duration: - 1 minutes and 40 seconds elapsed.`
 
-### make a custom ISO with a `run.sh` bash script
+### make a custom ISO with a `run.sh` bash script (still testing)
 
 install tools
 ```bash
