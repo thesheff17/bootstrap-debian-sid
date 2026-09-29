@@ -66,6 +66,11 @@ echo "debian:debian123123" | chpasswd
 if [ -n "$DM_SERVICE" ]; then
   systemctl enable $DM_SERVICE
   systemctl enable NetworkManager
+else
+  # we have to setup the network manually if we are not using NetworkManger package
+  echo 'auto ens18\n' >> /etc/network/interfaces
+  echo 'allow-hotplug ens18\n' >> /etc/network/interfaces
+  echo 'iface ens18 inet dhcp\n' >> /etc/network/interfaces
 fi
 systemctl enable ssh
 
