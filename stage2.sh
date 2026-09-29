@@ -9,12 +9,12 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-# Set default to gnome if no parameter provided
-DESKTOP_ENV="${1:-gnome}"
+# Set default to xfce if no parameter provided
+DESKTOP_ENV="${1:-xfce}"
 
 # Validate input
-if [[ ! "$DESKTOP_ENV" =~ ^(xfce|gnome)$ ]]; then
-  echo "Error: Invalid desktop environment. Use 'xfce' or 'gnome'"
+if [[ ! "$DESKTOP_ENV" =~ ^(xfce|gnome|none)$ ]]; then
+  echo "Error: Invalid desktop environment. Use 'xfce', 'gnome', or 'none'"
   exit 1
 fi
 
@@ -28,24 +28,26 @@ apt update
 echo "debian-sid" > /etc/hostname
 sed -i 's/127\.0\.0\.1[[:space:]]\+localhost$/127.0.0.1   localhost debian-sid/' /etc/hosts
 
-# conslidate all apt commands
-# Install Linux kernel, boot loader, xfce, and custom tools
-
 # Set desktop packages based on environment
 if [ "$DESKTOP_ENV" = "xfce" ]; then
-  DESKTOP_PACKAGES="xfce4 xfce4-goodies lightdm"
+  DESKTOP_PACKAGES="xfce4 xfce4-goodies lightdm network-manager timeshift firefox"
   DM_SERVICE="lightdm"
-else
-  DESKTOP_PACKAGES="gnome-shell gnome-core gdm3"
+elif [ "$DESKTOP_ENV" = "gnome" ]; then
+  DESKTOP_PACKAGES="gnome-shell gnome-core gdm3 network-manager timeshift firefox"
   DM_SERVICE="gdm3"
+else
+  # none option - skip GUI installation
+  DESKTOP_PACKAGES=""
+  DM_SERVICE=""
 fi
 
+# apt install
 DEBIAN_FRONTEND=noninteractive apt install -y \
     sudo locales \
     linux-image-amd64 firmware-linux grub-pc \
-    $DESKTOP_PACKAGES network-manager \
+    $DESKTOP_PACKAGES \
     htop vim ssh git wget curl build-essential python3-venv \
-    sysstat timeshift qemu-guest-agent firefox tmux btop
+    sysstat qemu-guest-agent tmux btop
 
 # Configure Timezone and Locales
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
@@ -61,8 +63,10 @@ echo "root:debian123123" | chpasswd
 echo "debian:debian123123" | chpasswd
 
 # enable services
-systemctl enable NetworkManager
-systemctl enable $DM_SERVICE
+if [ -n "$DM_SERVICE" ]; then
+  systemctl enable $DM_SERVICE
+  systemctl enable NetworkManager
+fi
 systemctl enable ssh
 
 # prep my bash banner script 
@@ -70,6 +74,7 @@ mkdir /home/debian/git/
 mkdir /home/debian/.virtualenvs
 cd /home/debian/git/
 git clone https://github.com/thesheff17/bash_banner.git
+git clone https://github.com/thesheff17/sheff-ll.git
 chown -R debian:debian /home/debian
 
 # Install GRUB to sda
