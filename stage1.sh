@@ -27,10 +27,9 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-# start the wall clock timer
-SECONDS=0
+START_TIME=$SECONDS
 
-apt - -y install dosfstools parted debootstrap arch-install-scripts vim wget
+apt -y install dosfstools parted debootstrap arch-install-scripts vim wget
 
 # hard drive partitioning
 parted -s /dev/sda mklabel gpt
@@ -42,7 +41,8 @@ mkswap /dev/sda2
 swapon /dev/sda2
 mkfs.ext4 /dev/sda3
 
-mount /dev/sda3 /mnt
+mount  /dev/sda3 /mnt
+
 
 debootstrap --arch=amd64 sid /mnt http://192.168.1.194:3142/deb.debian.org/debian/
 
@@ -69,10 +69,13 @@ echo "you should remove the live cd after rebooting."
 echo "if the live cd boots again your boot order is set to the live cd first."
 echo "please fix and reboot again."
 
-# elapsed time
-duration=$SECONDS
-elapsed_seconds=$((end_time - start_time))
-echo "duration: - $((duration / 60)) minutes and $((duration % 60)) seconds elapsed."
+# elasped time
+ELASPED_SECONDS=$(( SECONDS - START_TIME ))
+
+# Convert seconds to Minutes, and Seconds
+MIN=$(( (ELASPED_SECONDS % 3600) / 60 ))
+SEC=$(( ELASPED_SECONDS % 60 ))
+printf "Total elapsed time: %02dm:%02ds (%d total seconds)\n" "$MIN" "$SEC" "$ELASPED_SECONDS"
 
 read -r -p "Press [ENTER] to reboot, or Ctrl+C to cancel..."
 sudo reboot
