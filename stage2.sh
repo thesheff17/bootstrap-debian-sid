@@ -20,7 +20,7 @@ fi
 
 # generate new sources.list and update
 cat <<EOF > /etc/apt/sources.list
-deb http://192.168.1.194:3142/deb.debian.org/debian/ sid main contrib non-free non-free-firmware
+deb http://192.168.1.191:3142/deb.debian.org/debian/ sid main contrib non-free non-free-firmware
 EOF
 
 apt update
