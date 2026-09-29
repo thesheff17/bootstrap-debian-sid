@@ -43,7 +43,6 @@ mkfs.ext4 /dev/sda3
 
 mount  /dev/sda3 /mnt
 
-
 debootstrap --arch=amd64 sid /mnt http://192.168.1.194:3142/deb.debian.org/debian/
 
 genfstab -U /mnt >> /mnt/etc/fstab
