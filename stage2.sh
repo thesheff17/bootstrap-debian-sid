@@ -68,9 +68,11 @@ if [ -n "$DM_SERVICE" ]; then
   systemctl enable NetworkManager
 else
   # we have to setup the network manually if we are not using NetworkManger package
-  echo 'auto ens18\n' >> /etc/network/interfaces
-  echo 'allow-hotplug ens18\n' >> /etc/network/interfaces
-  echo 'iface ens18 inet dhcp\n' >> /etc/network/interfaces
+  echo ''  >> /etc/network/interfaces
+  echo 'auto ens18' >> /etc/network/interfaces
+  echo 'allow-hotplug ens18' >> /etc/network/interfaces
+  echo 'iface ens18 inet dhcp' >> /etc/network/interfaces
+  systemctl enable networking
 fi
 systemctl enable ssh
 
