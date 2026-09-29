@@ -53,14 +53,18 @@ for dir in /dev /dev/pts /proc /sys /run; do mount --bind $dir /mnt$dir; done
 wget -P /mnt/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/stage2.sh
 chmod +x /mnt/stage2.sh
 
-# calling into the chroot env and running stage2.sh
+# calling stage2.sh in the chroot env
+# you can pass gnome, xfce, or none to the stage2.sh script
+# default is xfce
 chroot /mnt /bin/bash /stage2.sh
 
 echo "sleeping 3 seconds then unmounting the file system."
+sync
 sleep 3
 
 # Unmount all mounted filesystems cleanly
 cd /
+sync
 umount -R /mnt
 
 echo "debian sid install completed."
