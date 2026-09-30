@@ -43,7 +43,7 @@ mkfs.ext4 /dev/sda3
 
 mount  /dev/sda3 /mnt
 
-debootstrap --arch=amd64 sid /mnt http://192.168.1.191:3142/deb.debian.org/debian/
+debootstrap --arch=amd64 sid /mnt http://192.168.1.194:3142/deb.debian.org/debian/
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
@@ -59,12 +59,10 @@ chmod +x /mnt/stage2.sh
 chroot /mnt /bin/bash /stage2.sh
 
 echo "sleeping 3 seconds then unmounting the file system."
-sync
 sleep 3
 
 # Unmount all mounted filesystems cleanly
 cd /
-sync
 umount -R /mnt
 
 echo "debian sid install completed."
