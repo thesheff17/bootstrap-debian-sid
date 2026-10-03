@@ -101,7 +101,8 @@ git clone https://github.com/thesheff17/sheff-ll.git
 chown -R debian:debian /home/debian
 
 # get post_install.sh script
-
+wget https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/post_install.sh
+chmod +x ./post_install.sh
 
 # Install GRUB to sda
 grub-install /dev/sda
