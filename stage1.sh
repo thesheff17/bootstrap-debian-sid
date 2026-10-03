@@ -3,27 +3,43 @@
 # clear
 clear
 
-echo "=================================================="
-echo "                   WARNING                        "
-echo "=================================================="
-echo "This script is EXTREMELY DESTRUCTIVE."
-echo "Executing this will format your hard drive and"
-echo "permanently erase ALL data."
-echo "You have been warned."
-echo "=================================================="
-echo
+# Color definitions
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+USE_COLORS="yes"
+
+color() {
+    if [ "$USE_COLORS" = "yes" ]; then
+        printf '%b' "$1$2${NC}"
+    else
+        printf '%b' "$2"
+    fi
+}
+
+color "$NC"  "=================================================="
+color "$RED" "                   WARNING                        "
+color "$NC"  "=================================================="
+color "$RED"  "This script is EXTREMELY DESTRUCTIVE."
+color "$RED"  "Executing this will format your hard drive and"
+color "$RED"  "permanently erase ALL data."
+color "$RED"  "You have been warned."
+color "$NC"  "=================================================="
+printf "\n"
 
 # Prompt the user for confirmation
 read -rp "Type 'YES' (all uppercase) to proceed with formatting: " USER_INPUT
 
 # Check if the user entered exactly 'YES'
 if [ "$USER_INPUT" != "YES" ]; then
-    echo "Aborting operation. No changes were made."
+    color "$RED" "Aborting operation. No changes were made."
     exit 1
 fi
 
 if [ "$EUID" -ne 0 ]; then
-  echo "Please run as root."
+  color "$RED" "Please run as root."
   exit 1
 fi
 
@@ -58,17 +74,17 @@ chmod +x /mnt/stage2.sh
 # default is xfce
 chroot /mnt /bin/bash /stage2.sh
 
-echo "sleeping 3 seconds then unmounting the file system."
+color "$NC" "sleeping 3 seconds then unmounting the file system."
 sleep 3
 
 # Unmount all mounted filesystems cleanly
 cd /
 umount -R /mnt
 
-echo "debian sid install completed."
-echo "you should remove the live cd after rebooting."
-echo "if the live cd boots again your boot order is set to the live cd first."
-echo "please fix and reboot again."
+color "$GREEN" "debian sid install completed."
+color "$GREEN" "you should remove the live cd after rebooting."
+color "$GREEN" "if the live cd boots again your boot order is set to the live cd first."
+color "$GREEN" "please fix and reboot again."
 
 # elasped time
 ELASPED_SECONDS=$(( SECONDS - START_TIME ))
