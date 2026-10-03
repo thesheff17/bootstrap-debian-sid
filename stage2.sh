@@ -108,9 +108,11 @@ cd /home/debian/git/
 git clone https://github.com/thesheff17/bash_banner.git
 git clone https://github.com/thesheff17/sheff-ll.git
 
-# get post_install.sh script
-wget wget -P /home/debian/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/post_install.sh
+# get scripts to run after linux distro boots
+wget -P /home/debian/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/post_install.sh
+wget -P /home/debian/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/add_sudo_debian_nopasswd.sh 
 chmod +x /home/debian/post_install.sh
+chmod +x /home/debian/add_sudo_debian_nopasswd.sh
 
 # fix permissions
 chown -R debian:debian /home/debian
