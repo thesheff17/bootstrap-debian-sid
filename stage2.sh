@@ -4,6 +4,15 @@
 # bootstrap setup.  This script should be ran
 # inside the chroot env
 
+# this script should be limited to:
+# - apt get install 
+# - basic setup of the linux distro
+# - clone some repos
+# - get post_install.sh script
+
+# anything else that needs to take significant time -
+# should go into post_install.sh script.
+
 # colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -98,7 +107,6 @@ mkdir /home/debian/.virtualenvs
 cd /home/debian/git/
 git clone https://github.com/thesheff17/bash_banner.git
 git clone https://github.com/thesheff17/sheff-ll.git
-
 
 # get post_install.sh script
 wget wget -P /home/debian/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/post_install.sh

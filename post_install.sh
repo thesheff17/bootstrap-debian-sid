@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # this script should be ran after you boot into the linux distro
+# stage2.sh should be fast as possible.  Anything else that takes
+# time should be contained in this script.  
 
 # clear
 clear
@@ -39,7 +41,10 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 
 # install brew packages
 brew install --cask vscodium
-brew install -y go ffmpeg ansible
+brew install -y go ffmpeg-full ansible node fzf openjdk
+
+# install extra python versions if you need them
+brew install -y python@3.11 python@3.12 python@3.13
 
 # update locate db
 sudo updatedb
