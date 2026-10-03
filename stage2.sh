@@ -63,7 +63,7 @@ DEBIAN_FRONTEND=noninteractive apt install -y \
     linux-image-amd64 firmware-linux grub-pc \
     $DESKTOP_PACKAGES \
     htop vim ssh git wget curl build-essential python3-venv \
-    sysstat qemu-guest-agent tmux btop
+    sysstat qemu-guest-agent tmux btop locate
 
 # Configure Timezone and Locales
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
@@ -98,11 +98,14 @@ mkdir /home/debian/.virtualenvs
 cd /home/debian/git/
 git clone https://github.com/thesheff17/bash_banner.git
 git clone https://github.com/thesheff17/sheff-ll.git
-chown -R debian:debian /home/debian
+
 
 # get post_install.sh script
-wget https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/post_install.sh
-chmod +x ./post_install.sh
+wget wget -P /home/debian/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/post_install.sh
+chmod +x /home/debian/post_install.sh
+
+# fix permissions
+chown -R debian:debian /home/debian
 
 # Install GRUB to sda
 grub-install /dev/sda

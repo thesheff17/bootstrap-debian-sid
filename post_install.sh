@@ -41,6 +41,9 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 brew install --cask vscodium
 brew install go ffmpeg ansible
 
+# update locate db
+sudo updatedb
+
 # elasped time
 ELASPED_SECONDS=$(( SECONDS - START_TIME ))
 
