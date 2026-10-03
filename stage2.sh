@@ -6,10 +6,10 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-USE_COLORS=true
+USE_COLORS="yes"
 
 color() {
-    if [ "$USE_COLORS" = true ]; then
+    if [ "$USE_COLORS" = "yes" ]; then
         printf '%b' "$1$2${NC}"
     else
         printf '%b' "$2"
