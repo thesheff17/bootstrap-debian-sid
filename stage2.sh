@@ -1,11 +1,27 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# Color definitions
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+USE_COLORS=true
+
+color() {
+    if [ "$USE_COLORS" = true ]; then
+        printf '%b' "$1$2${NC}"
+    else
+        printf '%b' "$2"
+    fi
+}
 
 # this script is the 2nd stage of debian sid
 # bootstrap setup.  This script should be ran
 # inside the chroot env
 
 if [ "$EUID" -ne 0 ]; then
-  echo "Please run as root."
+  color "$RED" "Please run as root.\n"
   exit 1
 fi
 
@@ -14,7 +30,7 @@ DESKTOP_ENV="${1:-xfce}"
 
 # Validate input
 if [[ ! "$DESKTOP_ENV" =~ ^(xfce|gnome|none)$ ]]; then
-  echo "Error: Invalid desktop environment. Use 'xfce', 'gnome', or 'none'"
+  color "$RED" "Error: Invalid desktop environment. Use 'xfce', 'gnome', or 'none'\n"
   exit 1
 fi
 
@@ -64,7 +80,7 @@ echo "debian:debian123123" | chpasswd
 
 # enable services
 if [ -n "$DM_SERVICE" ]; then
-  systemctl enable $DM_SERVICE
+  systemctl enable "$DM_SERVICE"
   systemctl enable NetworkManager
 else
   # we have to setup the network manually if we are not using NetworkManger package
@@ -90,4 +106,4 @@ update-grub
 
 sync
 
-echo "stage2.sh completed."
+color "$GREEN" "stage2.sh completed.\n"
