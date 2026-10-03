@@ -13,9 +13,9 @@ USE_COLORS="yes"
 
 color() {
     if [ "$USE_COLORS" = "yes" ]; then
-        printf '%b' "$1$2${NC}"
+        printf '%b' "$1$2${NC}\n"
     else
-        printf '%b' "$2"
+        printf '%b' "$2\n"
     fi
 }
 

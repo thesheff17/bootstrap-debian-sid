@@ -10,9 +10,9 @@ USE_COLORS="yes"
 
 color() {
     if [ "$USE_COLORS" = "yes" ]; then
-        printf '%b' "$1$2${NC}"
+        printf '%b' "$1$2${NC}\n"
     else
-        printf '%b' "$2"
+        printf '%b' "$2\n"
     fi
 }
 
@@ -21,7 +21,7 @@ color() {
 # inside the chroot env
 
 if [ "$EUID" -ne 0 ]; then
-  color "$RED" "Please run as root.\n"
+  color "$RED" "Please run as root."
   exit 1
 fi
 
@@ -30,7 +30,7 @@ DESKTOP_ENV="${1:-xfce}"
 
 # Validate input
 if [[ ! "$DESKTOP_ENV" =~ ^(xfce|gnome|none)$ ]]; then
-  color "$RED" "Error: Invalid desktop environment. Use 'xfce', 'gnome', or 'none'\n"
+  color "$RED" "Error: Invalid desktop environment. Use 'xfce', 'gnome', or 'none'"
   exit 1
 fi
 
@@ -106,4 +106,4 @@ update-grub
 
 sync
 
-color "$GREEN" "stage2.sh completed.\n"
+color "$GREEN" "stage2.sh completed."
