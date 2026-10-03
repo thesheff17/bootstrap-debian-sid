@@ -39,7 +39,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 
 # install brew packages
 brew install --cask vscodium
-brew install go ffmpeg ansible
+brew install -y go ffmpeg ansible
 
 # update locate db
 sudo updatedb
