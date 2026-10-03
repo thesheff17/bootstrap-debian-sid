@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 
-# Color definitions
+# this script is the 2nd stage of debian sid
+# bootstrap setup.  This script should be ran
+# inside the chroot env
+
+# colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
 USE_COLORS="yes"
-
 color() {
     if [ "$USE_COLORS" = "yes" ]; then
         printf '%b' "$1$2${NC}\n"
@@ -16,10 +19,7 @@ color() {
     fi
 }
 
-# this script is the 2nd stage of debian sid
-# bootstrap setup.  This script should be ran
-# inside the chroot env
-
+# root check
 if [ "$EUID" -ne 0 ]; then
   color "$RED" "Please run as root."
   exit 1
@@ -99,6 +99,9 @@ cd /home/debian/git/
 git clone https://github.com/thesheff17/bash_banner.git
 git clone https://github.com/thesheff17/sheff-ll.git
 chown -R debian:debian /home/debian
+
+# get post_install.sh script
+
 
 # Install GRUB to sda
 grub-install /dev/sda
