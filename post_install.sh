@@ -40,11 +40,20 @@ echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"' >> /home/debi
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 
 # install brew packages
-brew install --cask vscodium
 brew install -y go ffmpeg-full ansible node fzf openjdk
 
 # install extra python versions if you need them
 brew install -y python@3.11 python@3.12 python@3.13
+
+# vscodium https://vscodium.com
+wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
+    | gpg --dearmor \
+    | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
+
+echo -e 'Types: deb\nURIs: https://download.vscodium.com/debs\nSuites: vscodium\nComponents: main\nArchitectures: amd64 arm64\nSigned-by: /usr/share/keyrings/vscodium-archive-keyring.gpg' \
+| sudo tee /etc/apt/sources.list.d/vscodium.sources
+
+sudo apt update && sudo apt install codium -y
 
 # update locate db
 sudo updatedb
