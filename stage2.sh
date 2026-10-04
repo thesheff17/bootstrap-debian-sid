@@ -55,10 +55,10 @@ sed -i 's/127\.0\.0\.1[[:space:]]\+localhost$/127.0.0.1   localhost debian-sid/'
 
 # Set desktop packages based on environment
 if [ "$DESKTOP_ENV" = "xfce" ]; then
-  DESKTOP_PACKAGES="xfce4 xfce4-goodies lightdm network-manager timeshift firefox"
+  DESKTOP_PACKAGES="xfce4 xfce4-goodies lightdm network-manager timeshift firefox geany"
   DM_SERVICE="lightdm"
 elif [ "$DESKTOP_ENV" = "gnome" ]; then
-  DESKTOP_PACKAGES="gnome-shell gnome-core gdm3 network-manager timeshift firefox"
+  DESKTOP_PACKAGES="gnome-shell gnome-core gdm3 network-manager timeshift firefox geany"
   DM_SERVICE="gdm3"
 else
   # none option - skip GUI installation
