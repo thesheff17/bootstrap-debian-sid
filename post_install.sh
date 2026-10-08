@@ -31,6 +31,9 @@ fi
 
 START_TIME=$SECONDS
 
+# run update
+sudo apt update
+
 # install brew - skip if directory exists
 DIR="/home/linuxbrew/.linuxbrew"
 if [ ! -d "$DIR" ]; then
@@ -52,17 +55,43 @@ fi
 
 # vscodium https://vscodium.com - skip if /usr/bin/codium exists
 FILE1="/usr/bin/codium"
-if [ ! -f "$FILE1" ]; then 
+if [ ! -f "$FILE1" ]; then
     wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
         | gpg --dearmor \
         | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
 
     echo -e 'Types: deb\nURIs: https://download.vscodium.com/debs\nSuites: vscodium\nComponents: main\nArchitectures: amd64 arm64\nSigned-by: /usr/share/keyrings/vscodium-archive-keyring.gpg' \
     | sudo tee /etc/apt/sources.list.d/vscodium.sources
+    sudo apt install codium -y
 fi 
 
 # extra packages
-sudo apt update && sudo apt install codium firefox geany spyder timeshift python3-pylsp python3-pylsp-ruff ruff python3-qtconsole -y
+sudo apt install firefox geany spyder timeshift python3-pylsp python3-pylsp-ruff ruff python3-qtconsole -y
+
+# docker
+FILE2="/usr/bin/docker"
+if [ ! -f "$FILE2" ]; then
+    color "$GREEN" "installing docker."
+    sudo apt install ca-certificates gnupg -y
+    sudo curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+    # Docker official repository setup using 'bookworm' fallback for Debian Sid (forky)
+    DOCKER_CODENAME="bookworm"
+
+    sudo echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+    ${DOCKER_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/docker.list
+
+    sudo apt-get update -y
+
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+    sudo systemctl enable --now docker
+
+    sudo usermod -aG docker debian
+fi
+
 
 # update locate db
 sudo updatedb
