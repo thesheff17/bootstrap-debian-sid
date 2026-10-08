@@ -92,15 +92,3 @@ xorriso -indev debian-live-13.7.0-amd64-standard.iso \
         -map ~/iso_unpack / \
         -commit
 ```
-
-This is what my `run.sh` looks like this:
-```bash
-#!/bin/bash
-
-sudo passwd user
-sudo apt install -y ssh
-sudo systemctl start ssh
-wget https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/stage1.sh
-chmod +x stage1.sh
-ip addr show | grep 192
-```
