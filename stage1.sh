@@ -44,7 +44,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Set default apt cache mirror
-APT-MIRROR="${1:-192.168.1.194}"
+APT_MIRROR="${1:-192.168.1.194}"
 
 START_TIME=$SECONDS
 
