@@ -31,30 +31,38 @@ fi
 
 START_TIME=$SECONDS
 
-# install brew
-sudo mkdir -p /home/linuxbrew/.linuxbrew
-sudo chown -R debian:debian /home/linuxbrew/.linuxbrew
-NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-echo >> /home/debian/.bashrc
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"' >> /home/debian/.bashrc
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+# install brew - skip if directory exists
+DIR="/home/linuxbrew/.linuxbrew"
+if [ ! -d "$DIR" ]; then
+    color "$GREEN" "installing homebrew."
 
-# install brew packages
-brew install -y go ffmpeg-full ansible node fzf openjdk
+    sudo mkdir -p /home/linuxbrew/.linuxbrew
+    sudo chown -R debian:debian /home/linuxbrew/.linuxbrew
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo >> /home/debian/.bashrc
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"' >> /home/debian/.bashrc
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 
-# install extra python versions if you need them
-brew install -y python@3.11 python@3.12 python@3.13
+    # install brew packages
+    brew install -y go ffmpeg-full ansible node fzf openjdk
 
-# vscodium https://vscodium.com
-wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
-    | gpg --dearmor \
-    | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
+    # install extra python versions if you need them
+    brew install -y python@3.11 python@3.12 python@3.13
+fi
 
-echo -e 'Types: deb\nURIs: https://download.vscodium.com/debs\nSuites: vscodium\nComponents: main\nArchitectures: amd64 arm64\nSigned-by: /usr/share/keyrings/vscodium-archive-keyring.gpg' \
-| sudo tee /etc/apt/sources.list.d/vscodium.sources
+# vscodium https://vscodium.com - skip if /usr/bin/codium exists
+FILE1="/usr/bin/codium"
+if [ ! -f "$FILE1" ]; then 
+    wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
+        | gpg --dearmor \
+        | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
+
+    echo -e 'Types: deb\nURIs: https://download.vscodium.com/debs\nSuites: vscodium\nComponents: main\nArchitectures: amd64 arm64\nSigned-by: /usr/share/keyrings/vscodium-archive-keyring.gpg' \
+    | sudo tee /etc/apt/sources.list.d/vscodium.sources
+fi 
 
 # extra packages
-sudo apt update && sudo apt install codium firefox geany spyder timeshift -y
+sudo apt update && sudo apt install codium firefox geany spyder timeshift python3-pylsp python3-pylsp-ruff ruff python3-qtconsole -y
 
 # update locate db
 sudo updatedb
