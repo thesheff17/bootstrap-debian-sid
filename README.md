@@ -33,18 +33,21 @@ sudo systemctl enable --now apt-cacher-ng
 sudo systemctl status apt-cacher-ng
 ```
 
-### comands to run after live cd boots.  I embed 
+### comands to run after live cd boots.  I embed this in the iso as `run.sh` script and run as root.
+
+Example of `run.sh`
 ```bash
-sudo passwd user
-sudo apt install -y ssh
-sudo systemctl start ssh
+#!/bin/bash 
+passwd user
+apt install -y ssh
+systemctl start ssh
+wget https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/stage1.sh
+chmod +x ./stage1.sh
 ip addr show # get ip address
 ```
 
-### Run the script after you have ssh into the instance
+### Run `stage1.sh` once you ssh into the instance.
 ```bash
-wget https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/stage1.sh
-chmod +x ./stage1.sh
 ./stage1.sh
 ```
 
