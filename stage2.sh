@@ -37,6 +37,9 @@ fi
 # Set default to xfce if no parameter provided
 DESKTOP_ENV="${1:-xfce}"
 
+# Set default apt cache mirror
+APT-MIRROR="${2:-192.168.1.194}"
+
 # Validate input
 if [[ ! "$DESKTOP_ENV" =~ ^(xfce|gnome|none)$ ]]; then
   color "$RED" "Error: Invalid desktop environment. Use 'xfce', 'gnome', or 'none'"
@@ -45,7 +48,7 @@ fi
 
 # generate new sources.list and update
 cat <<EOF > /etc/apt/sources.list
-deb http://192.168.1.194:3142/deb.debian.org/debian/ sid main contrib non-free non-free-firmware
+deb http://${APT_MIRROR}:3142/deb.debian.org/debian/ sid main contrib non-free non-free-firmware
 EOF
 
 apt update

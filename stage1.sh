@@ -43,6 +43,9 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
+# Set default apt cache mirror
+APT-MIRROR="${1:-192.168.1.194}"
+
 START_TIME=$SECONDS
 
 apt -y install dosfstools parted debootstrap arch-install-scripts vim wget
@@ -59,7 +62,7 @@ mkfs.ext4 /dev/sda3
 
 mount  /dev/sda3 /mnt
 
-debootstrap --arch=amd64 sid /mnt http://192.168.1.194:3142/deb.debian.org/debian/
+debootstrap --arch=amd64 sid /mnt http://${APT_MIRROR}:3142/deb.debian.org/debian/
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
@@ -72,6 +75,8 @@ chmod +x /mnt/stage2.sh
 # calling stage2.sh in the chroot env
 # you can pass gnome, xfce, or none to the stage2.sh script
 # default is xfce
+
+# you can also change the apt mirror if needed
 chroot /mnt /bin/bash /stage2.sh
 
 color "$NC" "sleeping 3 seconds then unmounting the file system."

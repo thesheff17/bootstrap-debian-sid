@@ -104,4 +104,7 @@ MIN=$(( (ELASPED_SECONDS % 3600) / 60 ))
 SEC=$(( ELASPED_SECONDS % 60 ))
 printf "Total elapsed time: %02dm:%02ds (%d total seconds)\n" "$MIN" "$SEC" "$ELASPED_SECONDS"
 
+color "$GREEN" "You should consider rebooting the system."
 color "$GREEN" "post_install.sh completed."
+read -r -p "Press [ENTER] to reboot, or Ctrl+C to cancel..."
+sudo reboot
