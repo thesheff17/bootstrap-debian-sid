@@ -51,8 +51,7 @@ cat <<EOF > /etc/apt/sources.list
 deb http://${APT_MIRROR}:3142/deb.debian.org/debian/ sid main contrib non-free non-free-firmware
 EOF
 
-apt update
-
+# hostname
 echo "debian-sid" > /etc/hostname
 sed -i 's/127\.0\.0\.1[[:space:]]\+localhost$/127.0.0.1   localhost debian-sid/' /etc/hosts
 
@@ -70,6 +69,7 @@ else
 fi
 
 # apt install
+apt update
 DEBIAN_FRONTEND=noninteractive apt install -y \
     sudo locales \
     linux-image-amd64 firmware-linux grub-pc \
@@ -104,21 +104,11 @@ else
 fi
 systemctl enable ssh
 
-# prep my bash banner script 
-mkdir /home/debian/git/
-mkdir /home/debian/.virtualenvs
-cd /home/debian/git/
-git clone https://github.com/thesheff17/bash_banner.git
-git clone https://github.com/thesheff17/sheff-ll.git
-git clone https://github.com/thesheff17/bootstrap-debian-sid.git
-
 # get scripts to run after linux distro boots
 wget -P /home/debian/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/post_install.sh
 wget -P /home/debian/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/add_sudo_debian_nopasswd.sh
 chmod +x /home/debian/post_install.sh
 chmod +x /home/debian/add_sudo_debian_nopasswd.sh
-
-# fix permissions
 chown -R debian:debian /home/debian
 
 # Install GRUB to sda

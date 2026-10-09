@@ -34,9 +34,20 @@ START_TIME=$SECONDS
 # run update
 sudo apt update
 
+# install my tools - skip if directory exists
+DIR1="/home/debian/git/"
+if [ ! -d "$DIR1" ]; then
+    mkdir /home/debian/git/
+    mkdir /home/debian/.virtualenvs
+    cd /home/debian/git/
+    git clone https://github.com/thesheff17/bash_banner.git
+    git clone https://github.com/thesheff17/sheff-ll.git
+    git clone https://github.com/thesheff17/bootstrap-debian-sid.git
+fi
+
 # install brew - skip if directory exists
-DIR="/home/linuxbrew/.linuxbrew"
-if [ ! -d "$DIR" ]; then
+DIR2="/home/linuxbrew/.linuxbrew"
+if [ ! -d "$DIR2" ]; then
     color "$GREEN" "installing homebrew."
 
     sudo mkdir -p /home/linuxbrew/.linuxbrew
@@ -92,6 +103,9 @@ if [ ! -f "$FILE2" ]; then
     sudo usermod -aG docker debian
 fi
 
+#permissions 
+# fix permissions
+sudo chown -R debian:debian /home/debian
 
 # update locate db
 sudo updatedb
