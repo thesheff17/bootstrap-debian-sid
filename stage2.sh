@@ -38,7 +38,7 @@ fi
 DESKTOP_ENV="${1:-xfce}"
 
 # Set default apt cache mirror
-APT_MIRROR="${2:-192.168.1.194}"
+APT_MIRROR="${2:-192.168.1.7}"
 
 # Validate input
 if [[ ! "$DESKTOP_ENV" =~ ^(xfce|gnome|none)$ ]]; then
