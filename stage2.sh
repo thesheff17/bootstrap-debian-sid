@@ -68,10 +68,18 @@ else
   DM_SERVICE=""
 fi
 
+# set timezone before other apt command
+# it was throwing a bunch of locale warnings during the next apt command
+ln -sf /usr/share/zoneinfo/UTC /etc/localtime
+apt install -y locales
+sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
+echo 'LANG=en_US.UTF-8' > /etc/default/locale
+locale-gen
+
 # apt install
 apt update
 DEBIAN_FRONTEND=noninteractive apt install -y \
-    sudo locales \
+    sudo \
     linux-image-amd64 firmware-linux grub-pc \
     $DESKTOP_PACKAGES \
     htop vim ssh git wget curl build-essential python3-venv \
