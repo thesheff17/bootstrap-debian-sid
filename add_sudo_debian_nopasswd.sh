@@ -5,8 +5,14 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
+if [ -z "$1" ]; then
+    echo "Please pass this script the user name you want to use."
+    echo "This is usually debian or ubuntu"
+    exit 1
+fi
+
 # Define user and output file
-TARGET_USER="debian"
+TARGET_USER=$1
 SUDOERS_FILE="/etc/sudoers.d/${TARGET_USER}"
 
 # Create the sudoers drop-in file and set strict permissions
