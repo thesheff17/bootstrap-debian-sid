@@ -84,7 +84,7 @@ if [ ! -f "$FILE1" ]; then
 
     CODEIUMFILE="/home/debian/.config/VSCodium/User/settings.json"
     echo "{" > $CODEIUMFILE
-    echo '  "editor.workdWrap": "on"' >> $CODEIUMFILE
+    echo '  "editor.wordWrap": "on"' >> $CODEIUMFILE
     echo '}' >> $CODEIUMFILE
 fi 
 
