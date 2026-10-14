@@ -115,6 +115,43 @@ if [ ! -f "$FILE2" ]; then
     sudo usermod -aG docker debian
 fi
 
+# .desktop_env specific stuff
+FILE_PATH1="/home/debian/.desktop_env"
+
+# 1. Check if the file exists and is readable
+if [[ ! -r "$FILE_PATH" ]]; then
+    echo "Error: File $FILE_PATH does not exist or is not readable." >&2
+    exit 1
+fi
+
+# 2. Read file content, converting to lowercase and stripping whitespace
+DESKTOP_ENV=$(tr -d '[:space:]' < "$FILE_PATH1" | tr '[:upper:]' '[:lower:]')
+
+if [[ "$DESKTOP_ENV" == "xfce" ]]; then
+    
+    # setup https://tmog.org/
+    TARGET_DIR1="/home/debian/Applications"
+    if [ ! -d "$TARGET_DIR1" ]; then
+        mkdir -p "$TARGET_DIR1"
+    fi
+
+    wget -P "$TARGET_DIR1" https://tmog.org/rtm/downloads/TaskManagerOG-1.0.0-x86_64.AppImage
+    chmod +x "$TARGET_DIR1/*"
+
+    TMOG1 = "/home/debian/.local/share/applications/tmog-app.desktop"
+    echo "[Desktop Entry]" > $TMOG1
+    echo "Version=1.0" >> $TMOG1
+    echo "Type=Application" >> $TMOG1
+    echo "Name=tmog" >> $TMOG1
+    echo "Comment=Launch my custom program" >> $TMOG1
+    echo "Exec=$TARGET_DIR1/TaskManagerOG-1.0.0-x86_64.AppImage" >> $TMOG1
+    echo "Icon=utilities-terminal" >> $TMOG1
+    echo "Terminal=false" >> $TMOG1
+    echo "Categories=Development;" >> $TMOG1
+
+fi
+
+
 #permissions 
 # fix permissions
 sudo chown -R debian:debian /home/debian

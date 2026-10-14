@@ -37,6 +37,9 @@ fi
 # Set default to xfce if no parameter provided
 DESKTOP_ENV="${1:-xfce}"
 
+# I write this so I know what env we used later
+echo "$DESKTOP_ENV" > /home/debian/.desktop_env
+
 # Set default apt cache mirror
 APT_MIRROR="${2:-192.168.1.60}"
 
