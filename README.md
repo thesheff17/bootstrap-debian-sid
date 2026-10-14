@@ -1,22 +1,22 @@
 # bootstrap-debian-sid
 
 ### what is this?
-These are my personal tools to bootstrap debian sid.  
-
-It is a public repo to make it easier to use on github.com
+This project is to bootstrap [debian sid](https://www.debian.org/releases/sid/) as fast as possible from a [live CD](https://www.debian.org/CD/live/) to a usable enviroment to code on. 
 
 Feel free to use but use at your own RISK!  These scripts format hard drives.  Your data will be destroyed if you are not careful.  You have been warned.  Do not run `stage1.sh` or `stage2.sh` unless you know what it is doing.
 
 ### Why make this?
 
-As I look at it I want a minimal linux distro package install with a basic GUI.  You can pick either the xfce, gnome, or none for the desktop env.  Right now it defaults to xfce.  Installation times for me are also extremely fast with even the most basic hardware.  See below for a custom apt cache mirror setup(apt-cache-ng).
+As I look at it I want a minimal linux distro package install with a basic GUI.  You can pick either the xfce, gnome, or none for the desktop env.  Right now it defaults to xfce.  Installation times for me are also extremely fast with even the most basic hardware.  See below for a custom apt cache mirror to make it even faster.  The tool is called [apt-cache-ng](https://wiki.debian.org/AptCacherNg).
 
 ### Overview of scripts in repo
 
 * `stage1.sh` - runs most of the basic prepare commands to install linux.  Should be as fast as possible.
-* `stage2.sh` - runs inside the chroot env to bootstrap linux. Should be as fast as possible.  `stage2.sh` is called by `stage1.sh` so you don't have to call it directly.
-* `add_sudo_debian_nopasswd.sh` - run this after the system boots to exclude debian user from entering a sudo password.
-* `post_install.sh` - Should be ran after the linux system boots.  Everything else that is time consuming.  I don't care about speed in this script.  Run when you have time on your system.
+* `stage2.sh` - runs inside the chroot env to bootstrap linux. Should be as fast as 
+possible.  `stage2.sh` is called by `stage1.sh` so you don't have to call it directly.
+* `sudo add_sudo_debian_nopasswd.sh debian` - run this after the system boots to exclude debian user from entering a sudo password.
+* You should now change your hostname and reboot
+* `./post_install.sh` - This should be ran as a non root user with sudo nopassed setup correctly.  This script I consider a work in progress and will always be changing as I added new features and software.
 
 ### Download live standard ISO
 I use [debian-live-13.7.0-amd64-standard.iso](https://cdimage.debian.org/debian-cd/13.7.0-live/amd64/iso-hybrid/) and the hash can be find [here](https://cdimage.debian.org/debian-cd/13.7.0-live/amd64/iso-hybrid/SHA256SUMS).
