@@ -73,7 +73,19 @@ if [ ! -f "$FILE1" ]; then
 
     echo -e 'Types: deb\nURIs: https://download.vscodium.com/debs\nSuites: vscodium\nComponents: main\nArchitectures: amd64 arm64\nSigned-by: /usr/share/keyrings/vscodium-archive-keyring.gpg' \
     | sudo tee /etc/apt/sources.list.d/vscodium.sources
+    sudo apt-get update
     sudo apt install codium -y
+
+    # setup wordwrap
+    TARGET_DIR1="/home/debian/.config/VSCodium/User"
+    if [ ! -d "$TARGET_DIR1" ]; then
+        mkdir -p "$TARGET_DIR1"
+    fi
+
+    CODEIUMFILE="/home/debian/.config/VSCodium/User/settings.json"
+    echo "{" > $CODEIUMFILE
+    echo '  "editor.workdWrap": "on"' >> $CODEIUMFILE
+    echo '}' >> $CODEIUMFILE
 fi 
 
 # extra packages
@@ -88,7 +100,7 @@ if [ ! -f "$FILE2" ]; then
     sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
     # Docker official repository setup using 'bookworm' fallback for Debian Sid (forky)
-    DOCKER_CODENAME="bookworm"
+    DOCKER_CODENAME="trixie"
 
     sudo echo \
     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
