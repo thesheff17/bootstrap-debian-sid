@@ -178,6 +178,11 @@ sleep 1.5
 sudo systemctl enable code-server@debian --now
 sleep 1.5
 
+TARGET_DIR3="/home/debian/.local/share/code-server/User/"
+if [ ! -d "$TARGET_DIR3" ]; then
+        mkdir -p "$TARGET_DIR3"
+fi
+
 CODERFILE1="/home/debian/.local/share/code-server/User/settings.json"
 echo "{" > $CODERFILE1
 echo '    "workbench.colorTheme": "Visual Studio Dark",' >> $CODERFILE1
