@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Conky
+Comment=System monitor desktop widget
+Exec=sleep 3 && conky
+StartupNotify=false
+Terminal=false
+Hidden=false
