@@ -57,12 +57,14 @@ sed -i 's/127\.0\.0\.1[[:space:]]\+localhost$/127.0.0.1   localhost debian-sid/'
 
 # Set desktop packages based on environment
 if [ "$DESKTOP_ENV" = "xfce" ]; then
-  DESKTOP_PACKAGES="xfce4 xfce4-goodies lightdm network-manager xfce4-terminal firefox"
+  DESKTOP_PACKAGES="xfce4 xfce4-goodies lightdm network-manager xfce4-terminal firefox conky-all"
   DM_SERVICE="lightdm"
-  update-alternatives --config x-terminal-emulator
-
+  
+  # this is currently breaking the xfce4 terminal inside xfce
+  ln -s /usr/lib/x86_64-linux-gnu/libsimdutf.so.37 /usr/lib/x86_64-linux-gnu/libsimdutf.so.35
+  update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal.wrapper
 elif [ "$DESKTOP_ENV" = "gnome" ]; then
-  DESKTOP_PACKAGES="gnome-shell gnome-core gdm3 network-manager firefox"
+  DESKTOP_PACKAGES="gnome-shell gnome-core gdm3 network-manager firefox conky-all"
   DM_SERVICE="gdm3"
 else
   # none option - skip GUI installation
@@ -116,6 +118,12 @@ else
   systemctl enable networking
 fi
 systemctl enable ssh
+
+# conky config
+mkdir -p /home/debian/.config/conky/
+wget -P /home/debian/.config/conky/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/files/conky/conky.conf
+mkdir -p /home/debian/.config/autostart/
+wget -P /home/debian/.config/autostart/ https://github.com/thesheff17/bootstrap-debian-sid/blob/main/files/conky/conky.desktop
 
 # get scripts to run after linux distro boots
 wget -P /home/debian/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/post_install.sh
