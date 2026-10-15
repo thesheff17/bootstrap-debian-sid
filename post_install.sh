@@ -171,6 +171,18 @@ if [[ "$DESKTOP_ENV" == "xfce" ]]; then
 
 fi
 
+# code server in the browser
+# https://github.com/coder/code-server
+curl -fsSL https://code-server.dev/install.sh | sh
+
+CODERFILE=/home/debian/.config/code-server/config.yaml
+echo "bind-addr: 0.0.0.0:8443" > $CODERFILE
+echo "auth: password" >> $CODERFILE
+echo "password: debian123123" >> $CODERFILE
+echo "cert: true" >> $CODERFILE
+
+sudo systemctl enable code-server@debian --now
+
 #permissions 
 # fix permissions
 sudo chown -R debian:debian /home/debian
