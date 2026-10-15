@@ -146,6 +146,11 @@ if [[ "$DESKTOP_ENV" == "xfce" ]]; then
     wget -P "$TARGET_DIR1" "https://tmog.org/rtm/downloads/$APP_NAME"
     chmod +x "$TARGET_DIR1/$APP_NAME"
 
+    TARGET_DIR2="/home/debian/.local/share/applications/"
+    if [ ! -d "$TARGET_DIR2" ]; then
+        mkdir -p "$TARGET_DIR2"
+    fi
+
     TMOG1="/home/debian/.local/share/applications/tmog-app.desktop"
     echo "[Desktop Entry]" > $TMOG1
     echo "Version=1.0" >> $TMOG1
