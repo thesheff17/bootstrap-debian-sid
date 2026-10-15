@@ -39,6 +39,37 @@ if [[ ! -f "$SUDOCHECK" ]]; then
   exit 1
 fi
 
+# if the hostname is debian-sid we should change it
+CURRENT_HOST=$(hostname)
+
+# Check if the current hostname is 'debian-sid'
+if [ "$CURRENT_HOST" == "debian-sid" ]; then
+    color "$GREEN" "The current hostname is debian-sid.  This should be changed."
+    color "$GREEN" "Please enter a new hostname."
+    echo ""
+    # Prompt the user for a new hostname
+    read -p "Enter the new hostname: " NEW_HOST
+
+    # Validate that the input isn't empty
+    if [ -z "$NEW_HOST" ]; then
+        color "$RED" "Error: Hostname cannot be empty."
+        exit 1
+    fi
+
+    color "$GREEN" "Changing hostname from 'debian-sid' to '$NEW_HOST'..."
+    hostnamectl set-hostname "$NEW_HOST"
+    echo "$NEW_HOST" > /etc/hostname
+
+    # this is a messy regex if I want to use debian-sid-01 as hostname
+    if grep -qE '(^|[[:space:]])debian-sid([[:space:]]|$)' /etc/hosts; then
+        sudo sed -i -E 's/(^|[[:space:]])debian-sid([[:space:]]|$)/\1'"$NEW_HOST"'\2/g' /etc/hosts
+    fi
+
+    color "$GREEN" "You should reboot after a hostname change."
+    read -r -p "Press [ENTER] to reboot, or Ctrl+C to cancel..."
+    sudo reboot
+fi
+
 START_TIME=$SECONDS
 
 # run update
