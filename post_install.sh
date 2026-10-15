@@ -174,6 +174,9 @@ fi
 # code server in the browser
 # https://github.com/coder/code-server
 curl -fsSL https://code-server.dev/install.sh | sh
+sleep 1.5
+sudo systemctl enable code-server@debian --now
+sleep 1.5
 
 CODERFILE=/home/debian/.config/code-server/config.yaml
 echo "bind-addr: 0.0.0.0:8443" > $CODERFILE
@@ -181,7 +184,8 @@ echo "auth: password" >> $CODERFILE
 echo "password: debian123123" >> $CODERFILE
 echo "cert: true" >> $CODERFILE
 
-sudo systemctl enable code-server@debian --now
+sleep 1.5
+sudo systemctl restart code-server@debian
 
 #permissions 
 # fix permissions
