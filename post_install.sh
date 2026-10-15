@@ -15,6 +15,9 @@ NC='\033[0m'
 
 USE_COLORS="yes"
 
+# default to fast otherwise we install everything
+SPEED="${1:-fast}"
+
 color() {
     if [ "$USE_COLORS" = "yes" ]; then
         printf '%b' "$1$2${NC}\n"
@@ -57,11 +60,14 @@ if [ ! -d "$DIR2" ]; then
     echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"' >> /home/debian/.bashrc
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 
-    # install brew packages
-    brew install -y go ffmpeg-full ansible node fzf openjdk
-
-    # install extra python versions if you need them
-    brew install -y python@3.11 python@3.12 python@3.13
+    if [ "$SPEED" = "fast" ]; then
+        color "$GREEN" "running faster setup..."
+        brew install -y go ansible fzf hugo
+    else
+        color "$GREEN" "running slower setup..."
+        brew install -y go ffmpeg-full ansible node fzf openjdk hugo
+        brew install -y python@3.11 python@3.12 python@3.13
+    fi
 fi
 
 # vscodium https://vscodium.com - skip if /usr/bin/codium exists
@@ -119,8 +125,8 @@ fi
 FILE_PATH1="/home/debian/.desktop_env"
 
 # 1. Check if the file exists and is readable
-if [[ ! -r "$FILE_PATH" ]]; then
-    echo "Error: File $FILE_PATH does not exist or is not readable." >&2
+if [[ ! -r "$FILE_PATH1" ]]; then
+    color "$RED" "Error: File $FILE_PATH1 does not exist or is not readable."
     exit 1
 fi
 
@@ -129,14 +135,16 @@ DESKTOP_ENV=$(tr -d '[:space:]' < "$FILE_PATH1" | tr '[:upper:]' '[:lower:]')
 
 if [[ "$DESKTOP_ENV" == "xfce" ]]; then
     
+    echo "$GREEN" "configuring xfce settings..."
     # setup https://tmog.org/
     TARGET_DIR1="/home/debian/Applications"
     if [ ! -d "$TARGET_DIR1" ]; then
         mkdir -p "$TARGET_DIR1"
     fi
 
-    wget -P "$TARGET_DIR1" https://tmog.org/rtm/downloads/TaskManagerOG-1.0.0-x86_64.AppImage
-    chmod +x "$TARGET_DIR1/*"
+    APP_NAME = "TaskManagerOG-1.0.0-x86_64.AppImage"
+    wget -P "$TARGET_DIR1" "https://tmog.org/rtm/downloads/$APP_NAME"
+    chmod +x "$TARGET_DIR1/$APP_NAME"
 
     TMOG1 = "/home/debian/.local/share/applications/tmog-app.desktop"
     echo "[Desktop Entry]" > $TMOG1
@@ -150,7 +158,6 @@ if [[ "$DESKTOP_ENV" == "xfce" ]]; then
     echo "Categories=Development;" >> $TMOG1
 
 fi
-
 
 #permissions 
 # fix permissions
