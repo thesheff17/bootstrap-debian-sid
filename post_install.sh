@@ -178,11 +178,18 @@ sleep 1.5
 sudo systemctl enable code-server@debian --now
 sleep 1.5
 
-CODERFILE=/home/debian/.config/code-server/config.yaml
-echo "bind-addr: 0.0.0.0:8443" > $CODERFILE
-echo "auth: password" >> $CODERFILE
-echo "password: debian123123" >> $CODERFILE
-echo "cert: true" >> $CODERFILE
+CODERFILE1="/home/debian/.local/share/code-server/User/settings.json"
+echo "{" > $CODERFILE1
+echo '    "workbench.colorTheme": "Visual Studio Dark",' >> $CODERFILE1
+echo '    "window.density.layout": "compact"' >> $CODERFILE1
+echo '    "editor.wordWrap": "on"' >> $CODERFILE1
+echo '}' >> $CODERFILE1
+
+CODERFILE2=/home/debian/.config/code-server/config.yaml
+echo "bind-addr: 0.0.0.0:8443" > $CODERFILE2
+echo "auth: password" >> $CODERFILE2
+echo "password: debian123123" >> $CODERFILE2
+echo "cert: true" >> $CODERFILE2
 
 sleep 1.5
 sudo systemctl restart code-server@debian
