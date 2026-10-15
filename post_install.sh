@@ -32,6 +32,13 @@ if [ "$(id -u)" -eq 0 ]; then
   exit 1
 fi
 
+# check if sudo is setup correctly
+SUDOCHECK="/etc/sudoers.d/debian"
+if [[ -f "$SUDOCHECK" ]]; then
+  color "$RED" "Error: sudo is not setup correctly for the debian user."
+  exit 1
+fi
+
 START_TIME=$SECONDS
 
 # run update
