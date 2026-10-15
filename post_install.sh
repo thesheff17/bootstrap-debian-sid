@@ -63,7 +63,9 @@ if [ "$CURRENT_HOST" == "debian-sid" ]; then
     if grep -qE '(^|[[:space:]])debian-sid([[:space:]]|$)' /etc/hosts; then
         sudo sed -i -E 's/(^|[[:space:]])debian-sid([[:space:]]|$)/\1'"$NEW_HOST"'\2/g' /etc/hosts
     fi
-    sudo hostnamectl set-hostname "$NEW_HOST"
+    # this throws it cannot find the old hostname because of using sudo
+    # I want to ignore this.  I send it to /dev/null
+    sudo hostnamectl set-hostname "$NEW_HOST" &> /dev/null
 
     color "$GREEN" "You should reboot after a hostname change."
     read -r -p "Press [ENTER] to reboot, or Ctrl+C to cancel..."
