@@ -142,17 +142,17 @@ if [[ "$DESKTOP_ENV" == "xfce" ]]; then
         mkdir -p "$TARGET_DIR1"
     fi
 
-    APP_NAME = "TaskManagerOG-1.0.0-x86_64.AppImage"
+    APP_NAME="TaskManagerOG-1.0.0-x86_64.AppImage"
     wget -P "$TARGET_DIR1" "https://tmog.org/rtm/downloads/$APP_NAME"
     chmod +x "$TARGET_DIR1/$APP_NAME"
 
-    TMOG1 = "/home/debian/.local/share/applications/tmog-app.desktop"
+    TMOG1="/home/debian/.local/share/applications/tmog-app.desktop"
     echo "[Desktop Entry]" > $TMOG1
     echo "Version=1.0" >> $TMOG1
     echo "Type=Application" >> $TMOG1
     echo "Name=tmog" >> $TMOG1
     echo "Comment=Launch my custom program" >> $TMOG1
-    echo "Exec=$TARGET_DIR1/TaskManagerOG-1.0.0-x86_64.AppImage" >> $TMOG1
+    echo "Exec=$TARGET_DIR1/$APP_NAME" >> $TMOG1
     echo "Icon=utilities-terminal" >> $TMOG1
     echo "Terminal=false" >> $TMOG1
     echo "Categories=Development;" >> $TMOG1
