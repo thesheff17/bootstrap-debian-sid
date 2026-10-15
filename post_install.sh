@@ -142,7 +142,7 @@ DESKTOP_ENV=$(tr -d '[:space:]' < "$FILE_PATH1" | tr '[:upper:]' '[:lower:]')
 
 if [[ "$DESKTOP_ENV" == "xfce" ]]; then
     
-    echo "$GREEN" "configuring xfce settings..."
+    color "$GREEN" "configuring xfce settings..."
     # setup https://tmog.org/
     TARGET_DIR1="/home/debian/Applications"
     if [ ! -d "$TARGET_DIR1" ]; then
