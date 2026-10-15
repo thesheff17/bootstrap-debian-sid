@@ -58,7 +58,7 @@ if [ "$CURRENT_HOST" == "debian-sid" ]; then
 
     color "$GREEN" "Changing hostname from 'debian-sid' to '$NEW_HOST'..."
     sudo hostnamectl set-hostname "$NEW_HOST"
-    sudo echo "$NEW_HOST" > /etc/hostname
+    echo "$NEW_HOST" | sudo tee /etc/hostname 1>/dev/null
 
     # this is a messy regex if I want to use debian-sid-01 as hostname
     if grep -qE '(^|[[:space:]])debian-sid([[:space:]]|$)' /etc/hosts; then
