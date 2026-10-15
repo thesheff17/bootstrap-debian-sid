@@ -34,7 +34,7 @@ fi
 
 # check if sudo is setup correctly
 SUDOCHECK="/etc/sudoers.d/debian"
-if [[ -f "$SUDOCHECK" ]]; then
+if [[ ! -f "$SUDOCHECK" ]]; then
   color "$RED" "Error: sudo is not setup correctly for the debian user."
   exit 1
 fi
