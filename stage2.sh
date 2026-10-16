@@ -124,6 +124,7 @@ mkdir -p /home/debian/.config/conky/
 wget -P /home/debian/.config/conky/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/files/conky/conky.conf
 mkdir -p /home/debian/.config/autostart/
 wget -P /home/debian/.config/autostart/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/files/conky/conky.desktop
+chmod +x /home/debian/.config/autostart/conky.desktop
 
 # get scripts to run after linux distro boots
 wget -P /home/debian/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/post_install.sh
