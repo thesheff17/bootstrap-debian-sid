@@ -7,7 +7,6 @@
 # this script should be limited to:
 # - apt get install 
 # - basic setup of the linux distro
-# - clone some repos
 # - get post_install.sh script
 
 # anything else that needs to take significant time -
@@ -42,6 +41,11 @@ if [[ ! "$DESKTOP_ENV" =~ ^(xfce|gnome|none)$ ]]; then
   color "$RED" "Error: Invalid desktop environment. Use 'xfce', 'gnome', or 'none'"
   exit 1
 fi
+
+if [[ -z "$APT_MIRROR" ]]; then
+    echo "The APT_MIRROR variable is not set.  Please fix."
+    exit 1
+else
 
 # generate new sources.list and update
 cat <<EOF > /etc/apt/sources.list
