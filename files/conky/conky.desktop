@@ -2,7 +2,7 @@
 Type=Application
 Name=Conky
 Comment=System monitor desktop widget
-Exec=bash -c "sleep 3 && conky --daemonize"
+Exec=bash -c "sleep 15 && conky --daemonize"
 StartupNotify=false
 Terminal=false
 Hidden=false
