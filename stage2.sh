@@ -34,11 +34,8 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-# Set default to xfce if no parameter provided
-DESKTOP_ENV="${1:-xfce}"
-
-# Set default apt cache mirror
-APT_MIRROR="${2:-192.168.1.60}"
+DESKTOP_ENV="${1}"
+APT_MIRROR="${2}"
 
 # Validate input
 if [[ ! "$DESKTOP_ENV" =~ ^(xfce|gnome|none)$ ]]; then

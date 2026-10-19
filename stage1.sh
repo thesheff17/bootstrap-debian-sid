@@ -43,8 +43,13 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-# Set default apt cache mirror
-APT_MIRROR="${1:-192.168.1.60}"
+# set the desktop env you want to use:
+# default: xfce
+DESKTOP_ENV="${1:-xfce}"
+
+# set default mirror you want to use
+# default: 192.168.1.60
+APT_MIRROR="${2:-192.168.1.60}"
 
 START_TIME=$SECONDS
 
@@ -70,7 +75,7 @@ for dir in /dev /dev/pts /proc /sys /run; do mount --bind $dir /mnt$dir; done
 
 # wget stage2.sh script
 wget -P /mnt/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/stage2.sh
-chmod +x /mnt/stage2.sh
+chmod +x /mnt/stage2.sh $DESKTOP_ENV $APT_MIRROR
 
 # calling stage2.sh in the chroot env
 # you can pass gnome, xfce, or none to the stage2.sh script
