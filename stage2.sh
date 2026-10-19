@@ -45,7 +45,7 @@ fi
 if [[ -z "$APT_MIRROR" ]]; then
     echo "The APT_MIRROR variable is not set.  Please fix."
     exit 1
-else
+fi
 
 # generate new sources.list and update
 cat <<EOF > /etc/apt/sources.list
