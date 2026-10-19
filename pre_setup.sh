@@ -1,19 +1,14 @@
 #!/usr/bin/env bash
 
-# this script will help bootstrap a live cd 
+# this script will help bootstrap a live cd
+# this assumes you are already have ssh installed and running
+# so you can easily run this script from ssh and test
 
 # Ensure the script is run with root privileges
 if [[ $EUID -ne 0 ]]; then
     echo "This script must be run with root privileges exiting..."
     exit 1
 fi
-
-# install ssh
-apt get install ssh -y
-systemctl start ssh
-
-echo "sleeping 3 seconds..."
-sleep 3
 
 # get my keys file from a webserver
 mkdir -p /root/.ssh/
@@ -36,6 +31,8 @@ else
 fi
 
 echo "Restarting SSH service..."
-systemctl restart ssh
+systemctl reload ssh
 
-echo "pre_setup.sh completed"
+echo "test you can ssh to root from your setup device to the virtual machine."
+echo "if this works you should take a proxmox snapshot called: basic_setup_before_stage01"
+echo "pre_setup.sh completed."
