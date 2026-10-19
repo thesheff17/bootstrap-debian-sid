@@ -75,14 +75,14 @@ for dir in /dev /dev/pts /proc /sys /run; do mount --bind $dir /mnt$dir; done
 
 # wget stage2.sh script
 wget -P /mnt/ https://raw.githubusercontent.com/thesheff17/bootstrap-debian-sid/refs/heads/main/stage2.sh
-chmod +x /mnt/stage2.sh $DESKTOP_ENV $APT_MIRROR
+chmod +x /mnt/stage2.sh
 
 # calling stage2.sh in the chroot env
 # you can pass gnome, xfce, or none to the stage2.sh script
 # default is xfce
 
 # you can also change the apt mirror if needed
-chroot /mnt /bin/bash /stage2.sh
+chroot /mnt /bin/bash /stage2.sh $DESKTOP_ENV $APT_MIRROR
 
 color "$NC" "sleeping 3 seconds then unmounting the file system."
 sleep 3
