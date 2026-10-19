@@ -103,10 +103,11 @@ if [ ! -d "$DIR2" ]; then
     if [ "$SPEED" = "fast" ]; then
         color "$GREEN" "running faster setup..."
         brew install -y go ansible fzf hugo
+        brew install -y python@3.15
     else
         color "$GREEN" "running slower setup..."
         brew install -y go ffmpeg-full ansible node fzf openjdk hugo
-        brew install -y python@3.11 python@3.12 python@3.13
+        brew install -y python@3.11 python@3.12 python@3.13 python@3.15
     fi
 fi
 
