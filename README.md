@@ -55,6 +55,11 @@ ip addr show # get ip address
 
 For even faster testing I change a proxmox disk cache setting to: `Write Back (Unsafe)` during setup.  This can reduce the time another 45 seconds or so with this setting.  Use at your own risk though it is Unsafe for a reason.  You can read more about them [here](https://forum.proxmox.com/threads/disk-cache-wiki-documentation.125775/).
 
+### youtube video on how to use this repo
+
+[![Watch the video](https://www.youtube.com/watch?v=cw4CO8hsy5o)](https://www.youtube.com/watch?v=cw4CO8hsy5o)
+
+
 ### make a custom ISO with a `run.sh` bash script (still testing)
 
 install tools
