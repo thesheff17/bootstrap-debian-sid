@@ -57,7 +57,7 @@ For even faster testing I change a proxmox disk cache setting to: `Write Back (U
 
 ### youtube video on how to use this repo
 
-[![Watch the video](https://www.youtube.com/watch?v=cw4CO8hsy5o)](https://www.youtube.com/watch?v=cw4CO8hsy5o)
+[Watch the video](https://www.youtube.com/watch?v=cw4CO8hsy5o)
 
 
 ### make a custom ISO with a `run.sh` bash script (still testing)
